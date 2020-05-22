@@ -1,4 +1,4 @@
-/******************************************************************************************
+	/******************************************************************************************
 *	Chili DirectX Framework Version 16.10.01											  *
 *	Graphics.h																			  *
 *	Copyright 2016 PlanetChili <http://www.planetchili.net>								  *
@@ -86,6 +86,6 @@ private:
 	D3D11_MAPPED_SUBRESOURCE							mappedSysBufferTexture;
 	Surface												sysBuffer;
 public:
-	static constexpr unsigned int ScreenWidth = 800u;
-	static constexpr unsigned int ScreenHeight = 600u;
+	static constexpr unsigned int ScreenWidth = 640u;
+	static constexpr unsigned int ScreenHeight = 640u;
 };
