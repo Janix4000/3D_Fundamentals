@@ -12,7 +12,7 @@ public:
 			{
 				for (auto& x : { -1.f, 1.f })
 				{
-					vertices.emplace_back({ x * size, y * size, z * size });
+					vertices.emplace_back( x * size, y * size, z * size );
 				}
 			}
 		}
