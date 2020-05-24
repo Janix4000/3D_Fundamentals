@@ -44,22 +44,22 @@ void Game::UpdateModel()
 	const float dt = 1.f / 60.f;
 	auto& kbd = wnd.kbd;
 	if (kbd.KeyIsPressed('E')) {
-		zTheta -= dt * dTheta;
+		zTheta -= wrap_angle(dt * dTheta);
 	}
 	if (kbd.KeyIsPressed('Q')) {
-		zTheta += dt * dTheta;
+		zTheta += wrap_angle(dt * dTheta);
 	}
 	if (kbd.KeyIsPressed('W')) {
-		xTheta += dt * dTheta;
+		xTheta += wrap_angle(dt * dTheta);
 	}
 	if (kbd.KeyIsPressed('S')) {
-		xTheta -= dt * dTheta;
+		xTheta -= wrap_angle(dt * dTheta);
 	}
 	if (kbd.KeyIsPressed('D')) {
-		yTheta -= dt * dTheta;
+		yTheta -= wrap_angle(dt * dTheta);
 	}
 	if (kbd.KeyIsPressed('A')) {
-		yTheta += dt * dTheta;
+		yTheta += wrap_angle(dt * dTheta);
 	}
 
 
