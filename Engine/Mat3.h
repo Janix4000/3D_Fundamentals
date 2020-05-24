@@ -64,6 +64,33 @@ public:
 		}
 		return result;
 	}
+	_Mat3 operator*=(const _Mat3& rhs) {
+		return (*this = *this * rhs);
+	}
+	static _Mat3 RotationZ(float theta) {
+		const T sinT = (T)sin(theta), cosT = (T)cos(theta);
+		return {
+			cosT, sinT, (T)0.0,
+			-sinT, cosT, (T)0.0,
+			(T)0.0, (T)0.0, (T)1.0
+		};
+	}
+	static _Mat3 RotationY(float theta) {
+		const T sinT = (T)sin(theta), cosT = (T)cos(theta);
+		return {
+			cosT, (T)0.0, -sinT,
+			(T)0.0, (T)1.0, (T)0.0,
+			sinT, (T)0.0, cosT
+		};
+	}
+	static _Mat3 RotationX(float theta) {
+		const T sinT = (T)sin(theta), cosT = (T)cos(theta);
+		return {
+			(T)1.0, (T)0.0, (T)0.0,
+			(T)0.0, cosT, sinT,
+			(T)0.0, -sinT, cosT
+		};
+	}
 	static _Mat3 Identity()
 	{
 		return { 
