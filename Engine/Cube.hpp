@@ -1,6 +1,7 @@
 #pragma once
 #include "Primitives.hpp"
 #include "IndexedLineList.hpp"
+#include "IndexedTriangleList.hpp"
 
 class Cube {
 public:
@@ -24,6 +25,18 @@ public:
 			0,1, 1,3, 3,2, 2,0,
 			6,7, 7,5, 5,4, 4,6,
 			2,6, 3,7, 1,5, 0,4 }
+		};
+	}
+	IndexedTriangleList getTriangles() const {
+		return {
+			vertices, {
+			0,1,3, 0,3,2,
+			1,3,7, 1,5,7,
+			4,5,7, 4,6,7,
+			0,4,6, 0,2,6,
+			0,1,5, 0,4,5,
+			2,3,7, 2,6,7
+			}
 		};
 	}
 private:
