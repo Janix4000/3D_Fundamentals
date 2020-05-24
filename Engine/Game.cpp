@@ -72,20 +72,22 @@ void Game::UpdateModel()
 #include "PubeScreenTransformer.h"
 void Game::ComposeFrame()
 {
-	auto lines = cube.getLines();
-	const auto rot =
-		Mat3::RotationX(xTheta) *
-		Mat3::RotationY(yTheta) *
-		Mat3::RotationZ(zTheta);
-	for (auto& v : lines.vertices)
-	{
-		v *= rot;
-		v += {0.f, 0.f, zOffset};
-		pst.Transform(v);
-	}
-	auto& indices = lines.indices;
-	auto& vertices = lines.vertices;
-	for (auto it = indices.begin(), end = indices.end(); it < end; std::advance(it, 2)) {
-		gfx.DrawLine(vertices[*it], vertices[*std::next(it)], Colors::White);
-	}
+	//auto lines = cube.getLines();
+	//const auto rot =
+	//	Mat3::RotationX(xTheta) *
+	//	Mat3::RotationY(yTheta) *
+	//	Mat3::RotationZ(zTheta);
+	//for (auto& v : lines.vertices)
+	//{
+	//	v *= rot;
+	//	v += {0.f, 0.f, zOffset};
+	//	pst.Transform(v);
+	//}
+	//auto& indices = lines.indices;
+	//auto& vertices = lines.vertices;
+	//for (auto it = indices.begin(), end = indices.end(); it < end; std::advance(it, 2)) {
+	//	gfx.DrawLine(vertices[*it], vertices[*std::next(it)], Colors::White);
+	//}
+	
+	gfx.DrawTriangle({ 100.f, 100.f }, {200.f, 200.f}, (Vec2)wnd.mouse.GetPos(), Colors::Red);
 }
