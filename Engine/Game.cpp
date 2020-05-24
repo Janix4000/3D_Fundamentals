@@ -46,6 +46,7 @@ void Game::ComposeFrame()
 	auto lines = cube.getLines();
 	for (auto& v : lines.vertices)
 	{
+		v += {0.f, 0.f, 1.f};
 		pst.Transform(v);
 	}
 	auto& indices = lines.indices;
