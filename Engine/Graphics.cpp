@@ -348,7 +348,7 @@ void Graphics::DrawLine( float x1,float y1,float x2,float y2,Color c )
 
 		const float m = dx / dy;
 		float y = y1;
-		int lastIntY;
+		int lastIntY = 0;
 		for( float x = x1; y < y2; y += 1.0f,x += m )
 		{
 			lastIntY = int( y );
@@ -378,6 +378,80 @@ void Graphics::DrawLine( float x1,float y1,float x2,float y2,Color c )
 		if( int( x2 ) > lastIntX )
 		{
 			PutPixel( int( x2 ),int( y2 ),c );
+		}
+	}
+}
+
+void Graphics::DrawTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, Color c)
+{
+	auto pv0 = &v0;
+	auto pv1 = &v1;
+	auto pv2 = &v2;
+	if (pv0->y > pv1->y) {
+		std::swap(pv0, pv1);
+	}
+	if (pv1->y > pv2->y) {
+		std::swap(pv1, pv2);
+	}
+	if (pv0->y > pv1->y) {
+		std::swap(pv0, pv1);
+	}
+	if (pv0->y == pv1->y) {
+		if (pv0->x > pv1->x) {
+			std::swap(pv0, pv1);
+		}
+		DrawFlatTopTriangle(*pv0, *pv1, *pv2, c);
+	}
+	else if (pv1->y == pv2->y) {
+		if (pv1->x > pv2->x) {
+			std::swap(pv2, pv1);
+		}
+		DrawFlatBottomTriangle(*pv0, *pv1, *pv2, c);
+	}
+	else {
+		const auto dv0v2 = *pv2 - *pv0;
+		const auto mid = Vec2{ (pv2->x - pv0->x) * (pv1->y - pv0->y) / (pv2->y - pv0->y) + pv0->x, pv1->y };
+		auto pm = &mid;
+		if (pm->x < pv1->x) {
+			std::swap(pm, pv1);
+		}
+		DrawFlatBottomTriangle(*pv0, *pv1, *pm, c);
+		DrawFlatTopTriangle(*pv1, *pm, *pv2, c);
+	}
+}
+
+void Graphics::DrawFlatTopTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, Color c)
+{
+	const float m0 = (v0.x - v2.x) / (v0.y - v2.y);
+	const float m1 = (v1.x - v2.x) / (v1.y - v2.y);
+
+	const int y_beg = (int)ceil(v0.y - 0.5f);
+	const int y_end = (int)ceil(v2.y - 0.5f);
+	for (int y = y_beg; y < y_end; y++)
+	{
+		const int x_beg = (int)ceil(v0.x + (float(y) - v0.y + 0.5f) * m0 - 0.5f);
+		const int x_end = (int)ceil(v1.x + (float(y) - v1.y + 0.5f) * m1 - 0.5f);
+		for (int x = x_beg; x < x_end; x++)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
+void Graphics::DrawFlatBottomTriangle(const Vec2& v0, const Vec2& v1, const Vec2& v2, Color c)
+{
+	const float m0 = (v0.x - v1.x) / (v0.y - v1.y);
+	const float m1 = (v0.x - v2.x) / (v0.y - v2.y);
+
+	const int y_beg = (int)ceil(v0.y - 0.5f);
+	const int y_end = (int)ceil(v2.y - 0.5f);
+	for (int y = y_beg; y < y_end; y++)
+	{
+		const int x_beg = (int)ceil(v0.x + (float(y) - v0.y + 0.5f) * m0 - 0.5f);
+		const int x_end = (int)ceil(v0.x + (float(y) - v0.y + 0.5f) * m1 - 0.5f);
+		for (int x = x_beg; x < x_end; x++)
+		{
+			PutPixel(x, y, c);
 		}
 	}
 }
