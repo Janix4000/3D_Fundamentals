@@ -21,6 +21,8 @@
 #include "MainWindow.h"
 #include "Game.h"
 
+#include "Mat3.h"
+
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
@@ -39,13 +41,40 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	const float dt = 1.f / 60.f;
+	auto& kbd = wnd.kbd;
+	if (kbd.KeyIsPressed('E')) {
+		zTheta -= dt * dTheta;
+	}
+	if (kbd.KeyIsPressed('Q')) {
+		zTheta += dt * dTheta;
+	}
+	if (kbd.KeyIsPressed('W')) {
+		xTheta += dt * dTheta;
+	}
+	if (kbd.KeyIsPressed('S')) {
+		xTheta -= dt * dTheta;
+	}
+	if (kbd.KeyIsPressed('D')) {
+		yTheta -= dt * dTheta;
+	}
+	if (kbd.KeyIsPressed('A')) {
+		yTheta += dt * dTheta;
+	}
+
+
 }
 #include "PubeScreenTransformer.h"
 void Game::ComposeFrame()
 {
 	auto lines = cube.getLines();
+	const auto rot =
+		Mat3::RotationX(xTheta) *
+		Mat3::RotationY(yTheta) *
+		Mat3::RotationZ(zTheta);
 	for (auto& v : lines.vertices)
 	{
+		v *= rot;
 		v += {0.f, 0.f, 1.f};
 		pst.Transform(v);
 	}
