@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	cube(0.5f)
+	cube(0.4f)
 {
 }
 
@@ -61,6 +61,11 @@ void Game::UpdateModel()
 	if (kbd.KeyIsPressed('A')) {
 		yTheta += wrap_angle(dt * dTheta);
 	}
+	if (kbd.KeyIsPressed('R')) {
+		zOffset += dt;
+	}	if (kbd.KeyIsPressed('F')) {
+		zOffset -= dt;
+	}
 
 
 }
@@ -75,7 +80,7 @@ void Game::ComposeFrame()
 	for (auto& v : lines.vertices)
 	{
 		v *= rot;
-		v += {0.f, 0.f, 1.f};
+		v += {0.f, 0.f, zOffset};
 		pst.Transform(v);
 	}
 	auto& indices = lines.indices;

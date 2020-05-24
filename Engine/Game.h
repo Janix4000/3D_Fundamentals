@@ -48,5 +48,6 @@ private:
 	Cube cube;
 	float xTheta = 0.f, yTheta = 0.f, zTheta = 0.f;
 	static constexpr float dTheta = PI;
+	float zOffset = 2.f;
 	/********************************/
 };
